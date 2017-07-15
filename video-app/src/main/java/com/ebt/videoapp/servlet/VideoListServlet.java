@@ -1,9 +1,6 @@
 package com.ebt.videoapp.servlet;
 
-import com.ebt.common.Video;
-import com.ebt.videoapp.model.VideoImpl;
 import com.ebt.videoapp.service.VideoService;
-import org.keycloak.KeycloakSecurityContext;
 
 import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
@@ -14,31 +11,30 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import org.jboss.logging.Logger;
 
 /**
- * Сервлет показывает список видео, используя в качестве данных внутренний сервис.
+ * Сервлет показывает список видео, используя в качестве данных внутренний
+ * сервис.
  *
  * @author EastBanc Technologies (http://eastbanctech.ru/)
  */
 @WebServlet("/video-list-servlet")
 @DeclareRoles("video-app-user")
-@ServletSecurity(@HttpConstraint(rolesAllowed = {"video-app-user"}))
+@ServletSecurity(
+        @HttpConstraint(rolesAllowed = {"video-app-user"}))
 public class VideoListServlet extends HttpServlet {
 
-    @Inject
-    private VideoService videoService;
+    Logger log = Logger.getLogger(VideoListServlet.class);
+
+    //@Inject
+    private final VideoService videoService  = new VideoService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target("http://localhost:8080/video-rest/list");
+        /*Client client = ClientBuilder.newBuilder().build();
+        WebTarget target = client.target("http://192.168.1.150:8080/video-rest/list");
         GenericType<List<VideoImpl>> listGenericType = new GenericType<List<VideoImpl>>() {
         };
         KeycloakSecurityContext ksc = (KeycloakSecurityContext) req.getAttribute(KeycloakSecurityContext.class.getName());
@@ -51,6 +47,9 @@ public class VideoListServlet extends HttpServlet {
 
         req.setAttribute("list", mergeList);
         req.setAttribute("ksc", ksc);
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(req, resp);*/
+        log.info("videoService = " + videoService);
+        req.setAttribute("list", videoService.list());
         getServletContext().getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(req, resp);
     }
 }

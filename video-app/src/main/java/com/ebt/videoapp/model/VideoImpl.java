@@ -22,6 +22,7 @@ public class VideoImpl implements Video {
 
     private String source;
 
+    @Override
     public String getTitle() {
         return title;
     }
@@ -30,6 +31,7 @@ public class VideoImpl implements Video {
         this.title = title;
     }
 
+    @Override
     public String getUrl() {
         return url;
     }
@@ -38,6 +40,7 @@ public class VideoImpl implements Video {
         this.url = url;
     }
 
+    @Override
     public Double getRating() {
         return rating;
     }
@@ -46,6 +49,7 @@ public class VideoImpl implements Video {
         this.rating = rating;
     }
 
+    @Override
     public VideoCategory getCategory() {
         return category;
     }
@@ -54,6 +58,7 @@ public class VideoImpl implements Video {
         this.category = category;
     }
 
+    @Override
     public String getId() {
         return id;
     }
@@ -62,6 +67,7 @@ public class VideoImpl implements Video {
         this.id = id;
     }
 
+    @Override
     public String getSource() {
         return source;
     }
