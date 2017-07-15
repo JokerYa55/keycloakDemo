@@ -19,9 +19,11 @@ package com.ebt.videorest.service;
 import com.ebt.common.Video;
 import com.ebt.common.VideoCategory;
 import com.ebt.videorest.model.VideoImpl;
+import java.util.ArrayList;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Видео сервис.
@@ -30,11 +32,13 @@ import java.util.List;
  */
 public class VideoService {
 
-    private LinkedList<Video> list = new LinkedList<>();
+    Logger log = Logger.getLogger(getClass().getName());
+    private List<Video> list = new ArrayList<>();
 
     public VideoService() {
 
         VideoImpl video = new VideoImpl();
+        video.setId("1");
         video.setTitle("Leo Messi scores a fantastic goal");
         video.setUrl("http://www.youtube.com/watch?v=3KLrasBtsCQ");
         video.setCategory(VideoCategory.SPORT);
@@ -43,6 +47,7 @@ public class VideoService {
         list.add(video);
 
         video = new VideoImpl();
+        video.setId("2");
         video.setTitle("Linkin Park - Final Masquerade");
         video.setUrl("http://www.youtube.com/watch?v=i8q8fFs3kTM");
         video.setCategory(VideoCategory.MUSIC);
@@ -53,6 +58,7 @@ public class VideoService {
 
 
     public List<Video> list() {
+        log.info(list.toString());
         return list;
     }
 
