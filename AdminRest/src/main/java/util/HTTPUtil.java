@@ -25,7 +25,6 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.json.simple.parser.ParseException;
-import services.userServices;
 
 /**
  *
@@ -33,8 +32,10 @@ import services.userServices;
  */
 public class HTTPUtil {
 
-    // private static final Logger log = Logger.getLogger(getClass().getName());
+    private static final Logger log = Logger.getLogger("HTTPUtil");
+
     public static JSONObject doPost(String url, Object params, Map<String, String> headerList) throws ParseException {
+        log.info("doPost_1");
         JSONObject res = new JSONObject();
         try {
             HttpClient httpClient = HttpClientBuilder.create().build();
@@ -42,7 +43,7 @@ public class HTTPUtil {
             JSONParser parser = new JSONParser();
             HttpPost post = new HttpPost(url);
             StringEntity postingString = new StringEntity(gson.toJson(params));
-            System.out.println("json = " + gson.toJson(params));
+            //log.info("json = " + gson.toJson(params));
             post.setEntity(postingString);
             if (headerList != null) {
                 headerList.entrySet().stream().forEach((t) -> {
@@ -56,17 +57,17 @@ public class HTTPUtil {
             String line;
             StringBuilder json = new StringBuilder();
             while ((line = rd.readLine()) != null) {
-                System.out.println(line);
+                //log.info(line);
                 json.append(line);
             }
 
             Object obj = parser.parse(json.toString());
             JSONObject jsonObj = (JSONObject) obj;
             res = jsonObj;
-            System.out.println("access_token : " + res.get("access_token"));
+            //log.info("access_token : " + res.get("access_token"));
 
         } catch (IOException | IllegalStateException | ParseException e) {
-            System.out.println(e.getMessage());
+            log.warning(e.getMessage());
         }
         return res;
     }
@@ -75,6 +76,7 @@ public class HTTPUtil {
      * Отправка POST запроса
      */
     public static JSONObject doPost(String url, List params, Map<String, String> headerList) {
+        log.info("doPost_2");
         JSONObject res = new JSONObject();
         try {
             HttpClient client = new DefaultHttpClient();
@@ -95,7 +97,7 @@ public class HTTPUtil {
             String line;
             StringBuilder json = new StringBuilder();
             while ((line = rd.readLine()) != null) {
-                System.out.println(line);
+                //log.info(line);
                 json.append(line);
             }
 
@@ -103,15 +105,16 @@ public class HTTPUtil {
             Object obj = parser.parse(json.toString());
             JSONObject jsonObj = (JSONObject) obj;
             res = jsonObj;
-            System.out.println("access_token : " + res.get("access_token"));
+            //log.info("access_token : " + res.get("access_token"));
 
         } catch (IOException | IllegalStateException | ParseException e) {
-            System.out.println(e.getMessage());
+            log.warning(e.getMessage());
         }
         return res;
     }
 
     public static JSONObject doGet(String url, Map<String, String> headerList) throws ParseException {
+        log.info("doGet");
         JSONObject res = new JSONObject();
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(url);
@@ -130,7 +133,7 @@ public class HTTPUtil {
             String line;
             StringBuilder json = new StringBuilder();
             while ((line = rd.readLine()) != null) {
-                System.out.println(line);
+                //log.info(line);
                 json.append(line);
             }
             JSONParser parser = new JSONParser();
@@ -138,7 +141,7 @@ public class HTTPUtil {
             JSONObject jsonObj = (JSONObject) obj;
             res = jsonObj;
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            log.warning(ex.getMessage());
         }
         return res;
     }
@@ -152,9 +155,9 @@ public class HTTPUtil {
      * @param client_id
      * @return
      */
-    public JSONObject getAccessToken(String userName, String password, String host, String realm, String client_id) {
+    /*public JSONObject getAccessToken(String userName, String password, String host, String realm, String client_id) {
         System.out.println("getAccessToken");
 
         return userServices.getToken(userName, password, host, realm, client_id);
-    }
+    }*/
 }
