@@ -7,9 +7,14 @@ package services;
 
 import com.sun.istack.internal.logging.Logger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+import util.HTTPUtil;
+import static util.HTTPUtil.doGet;
 import static util.HTTPUtil.doPost;
 
 /**
@@ -46,4 +51,53 @@ public class userServices {
         }
         return res;
     }
+
+    /**
+     *
+     * @param host
+     * @param realm
+     * @param username
+     * @param accessToken
+     * @return
+     */
+    public static JSONObject getUserShortInfo(String host, String realm, String username, String accessToken) {
+        JSONObject res = null;
+        try {
+            String url;
+            url = "http://" + host + "/auth/realms/" + realm + "/protocol/openid-connect/userinfo?username="+username;
+            Map<String, String> mapHeader = new HashMap<>();
+            mapHeader.put("Content-Type", "application/json");
+            mapHeader.put("Authorization", "Bearer " + accessToken);
+            doGet(url, mapHeader);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
+        return res;
+    }
+
+    /**
+     * Функция получает полные данные о пользователе
+     *
+     * @param host
+     * @param realm
+     * @param id
+     * @param accessToken
+     * @return
+     */
+    public static JSONObject getUserFullInfo(String host, String realm, String id, String accessToken) {
+        // GET /admin/realms/{realm}/users/{id}
+        JSONObject res = null;
+        try {
+            String url;
+            url = "http://" + host + "/auth/admin/realms/" + realm + "/users/" + id;
+            Map<String, String> mapHeader = new HashMap<>();
+            mapHeader.put("Content-Type", "application/json");
+            mapHeader.put("Authorization", "Bearer " + accessToken);
+            doGet(url, mapHeader);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
+        return res;
+    }
+
 }

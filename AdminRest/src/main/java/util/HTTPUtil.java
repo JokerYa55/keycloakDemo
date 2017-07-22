@@ -6,12 +6,12 @@
 package util;
 
 import com.google.gson.Gson;
-import com.sun.istack.internal.logging.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.apache.http.client.HttpClient;
@@ -25,6 +25,7 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.json.simple.parser.ParseException;
+import services.userServices;
 
 /**
  *
@@ -32,7 +33,7 @@ import org.json.simple.parser.ParseException;
  */
 public class HTTPUtil {
 
-    private static final Logger log = Logger.getLogger(HTTPUtil.class);
+    // private static final Logger log = Logger.getLogger(getClass().getName());
     public static JSONObject doPost(String url, Object params, Map<String, String> headerList) throws ParseException {
         JSONObject res = new JSONObject();
         try {
@@ -110,7 +111,7 @@ public class HTTPUtil {
         return res;
     }
 
-   public static JSONObject doGet(String url, Map<String, String> headerList) throws ParseException {
+    public static JSONObject doGet(String url, Map<String, String> headerList) throws ParseException {
         JSONObject res = new JSONObject();
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(url);
@@ -137,8 +138,23 @@ public class HTTPUtil {
             JSONObject jsonObj = (JSONObject) obj;
             res = jsonObj;
         } catch (IOException ex) {
-            log.info(ex.getMessage());
+            System.out.println(ex.getMessage());
         }
         return res;
+    }
+
+    /**
+     *
+     * @param userName
+     * @param password
+     * @param host
+     * @param realm
+     * @param client_id
+     * @return
+     */
+    public JSONObject getAccessToken(String userName, String password, String host, String realm, String client_id) {
+        System.out.println("getAccessToken");
+
+        return userServices.getToken(userName, password, host, realm, client_id);
     }
 }
