@@ -11,46 +11,46 @@ package beans;
  */
 public class user {
 
-    private int i;
-    private String Name;
-    private String Desc;
+    private int id;
+    private String name;
+    private String desc;
 
-    public int getI() {
-        return i;
+    public user() {
     }
 
-    public void setI(int i) {
-        this.i = i;
+    public user(int id, String name, String desc) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDesc() {
-        return Desc;
+        return desc;
     }
 
-    public void setDesc(String Desc) {
-        this.Desc = Desc;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     @Override
     public String toString() {
-        return "user{" + "i=" + i + ", Name=" + Name + ", Desc=" + Desc + '}';
-    }
-
-    public user(int i, String Name, String Desc) {
-        this.i = i;
-        this.Name = Name;
-        this.Desc = Desc;
-    }
-
-    public user() {
+        return "user{" + "id=" + id + ", name=" + name + ", desc=" + desc + '}';
     }
 
 }

@@ -15,6 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -41,8 +42,8 @@ public class MyRest {
     }
 
     @POST
-    @Path("/tpost")
-    @Consumes("application/json")
+    //@Path("/tpost")
+    @Consumes(MediaType.APPLICATION_JSON)
     public String setUser(user person) {
         log.info("setUser");
         return person.toString();

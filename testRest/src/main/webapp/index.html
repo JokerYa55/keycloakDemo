@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Личный кабинет</title>
+
+        <meta charset="UTF-8">               
+        <script src="jquery-3.2.1.js"></script>        
+        <script>
+            function testREST() {
+                var jData = {};
+                jData.id = 100;
+                jData.name = "TEST";
+                jData.desc = "HESH";
+                console.log(jData);
+                
+                var jsStr = JSON.stringify(jData);
+                console.log(jsStr);
+                
+                $.ajax({
+                    url: 'http://192.168.1.150:8080/testRest/webresources/hello', type: 'POST'
+                    ,headers: {'Content-Type': "application/json"}
+                    , data: jsStr
+                    , dataType: 'json'
+                    , success: function (res) {
+                        console.log("res = ");
+                        console.log(res);
+                    }
+                });
+            }
+
+        </script>    
+
+    </head>
+    <body>
+
+        <button onclick="testREST()"> Test </button>
+    </body>
+</body>
+</html>
