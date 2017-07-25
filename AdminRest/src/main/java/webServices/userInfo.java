@@ -7,13 +7,13 @@ package webServices;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
-import services.userServices;
 import static services.userServices.getToken;
 import static services.userServices.getUserFullInfo;
 import static services.userServices.getUserShortInfo;
@@ -34,9 +34,13 @@ public class userInfo extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final Logger log = Logger.getLogger(getClass().getName());
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
+        // ;charset=UTF-8
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 //            out.println("<!DOCTYPE html>");
@@ -45,15 +49,20 @@ public class userInfo extends HttpServlet {
 //            out.println("<title>Servlet userInfo</title>");            
 //            out.println("</head>");
 //            out.println("<body>");
-            
+
             JSONObject token = getToken("appuser", "123", "192.168.1.150:8080", "videomanager", "video-app", "50c93bab-fe8f-422a-948e-a63c52458ee3");
             JSONObject userShotInfo = getUserShortInfo("192.168.1.150:8080", "videomanager", "appuser", (String) token.get("access_token"));
             String userID = (String) userShotInfo.get("sub");
             // Авторизуемся под админом
             JSONObject tokenAdm = getToken("vasil", "123", "192.168.1.150:8080", "master", "admin-cli", null);
             JSONObject userFullInfo = getUserFullInfo("192.168.1.150:8080", "videomanager", userID, (String) tokenAdm.get("access_token"));
-            out.println(userFullInfo.toString());
             
+            log.info(userFullInfo.toJSONString());
+            
+            out.println(userFullInfo.toString());
+            out.flush();
+            out.close();
+
 //            //out.println("<h1>Servlet userInfo at " + request.getContextPath() + "</h1>");
 //            out.println("</body>");
 //            out.println("</html>");

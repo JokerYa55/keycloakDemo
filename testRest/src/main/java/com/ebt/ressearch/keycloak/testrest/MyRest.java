@@ -8,13 +8,17 @@ package com.ebt.ressearch.keycloak.testrest;
 import beans.user;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -23,22 +27,37 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("hello")
 public class MyRest {
+
     private Logger log = Logger.getLogger(getClass().getName());
 
+    /**
+     * Инкапсулируем информацию по requestHeader
+     */
+    /*@Context
+    private HttpHeaders requestHeaders;
+     */
+    @Context
+    private HttpServletRequest httpRequest;
+
     @GET
-    @Produces("application/json")
+    //@Produces("application/json")
     //@Produces("text/plain")    
     //@Path("/{id}")
-    //@Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-
     public user getText(@PathParam("id") String id) {
         List<user> res = new ArrayList<>();
-        user u1 = new user(new Integer(id), "test", "Новый пользователь");
+        user u1 = new user(id, "test", "Новый пользователь");
+        log.log(Level.INFO, "header = {0}", httpRequest.getServletPath());
+        log.log(Level.INFO, "header = {0}", httpRequest.getLocalAddr());
+        log.log(Level.INFO, "header = {0}", httpRequest.getMethod());
+        
+
+        
+        //log.info(size);
         res.add(u1);
         System.out.println("Test");
         return u1;
-        //return "TEST";
     }
 
     @POST
@@ -46,6 +65,9 @@ public class MyRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public String setUser(user person) {
         log.info("setUser");
+        log.log(Level.INFO, "header = {0}", httpRequest.getServletPath());
+        log.log(Level.INFO, "header = {0}", httpRequest.getLocalAddr());
+        log.log(Level.INFO, "header = {0}", httpRequest.getMethod());
         return person.toString();
     }
 

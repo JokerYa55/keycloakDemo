@@ -16,8 +16,9 @@
                 var jsStr = JSON.stringify(jData);
                 console.log(jsStr);
                 
+                //webresources
                 $.ajax({
-                    url: 'http://192.168.1.150:8080/testRest/webresources/hello', type: 'POST'
+                    url: 'http://192.168.1.150:8080/testRest/admusers/hello', type: 'POST'
                     ,headers: {'Content-Type': "application/json"}
                     , data: jsStr
                     , dataType: 'json'

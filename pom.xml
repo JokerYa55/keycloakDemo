@@ -13,7 +13,9 @@
         <module>video-rest</module>
     <module>elk-app</module>
     <module>adminREST</module>
-  </modules>
+    <module>testRest</module>
+        <module>JavaApplication2/REST_client</module>
+    </modules>
 
     <properties>
         <version.java>1.8</version.java>

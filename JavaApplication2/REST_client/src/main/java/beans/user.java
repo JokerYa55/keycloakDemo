@@ -11,24 +11,24 @@ package beans;
  */
 public class user {
 
-    private String id;
+    private int id;
     private String name;
     private String desc;
 
     public user() {
     }
 
-    public user(String id, String name, String desc) {
+    public user(int id, String name, String desc) {
         this.id = id;
         this.name = name;
         this.desc = desc;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

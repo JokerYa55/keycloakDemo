@@ -12,7 +12,7 @@ import javax.ws.rs.core.Application;
  *
  * @author vasil
  */
-@javax.ws.rs.ApplicationPath("admusers")
+@javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
 
     @Override
@@ -29,7 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(com.ebt.ressearch.keycloak.testrest.MyRest.class);
+        resources.add(webServices.userInfoREST.class);
     }
     
 }
