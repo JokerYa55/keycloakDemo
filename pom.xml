@@ -15,6 +15,7 @@
     <module>adminREST</module>
     <module>testRest</module>
         <module>JavaApplication2/REST_client</module>
+        <module>../keycloackApp/demoAuthWAR</module>
     </modules>
 
     <properties>
